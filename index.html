@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Wishes</title>
+    <style>
+        /* General container styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: url('5.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            animation: fadeInBackground 3s ease-in-out;
+        }
+
+        @keyframes fadeInBackground {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header styling */
+        .header img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: popIn 1s ease-in-out;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .header h1 {
+            /*color: #ff5e5e;*/
+            color: #f39c12; /* Golden Yellow */
+
+            font-size: 28px;
+            margin: 0;
+            animation: textGlow 2s infinite alternate;
+        }
+
+        @keyframes textGlow {
+            from { text-shadow: 0 0 10px #ff5e5e, 0 0 20px #ff5e5e, 0 0 30px #ff5e5e; }
+            to { text-shadow: 0 0 20px #ffd700, 0 0 30px #ffd700, 0 0 40px #ffd700; }
+        }
+
+        .header p {
+            color: #ffd700;
+            font-size: 16px;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+            margin-top: 10px;
+        }
+
+        /* Responsive grid styling */
+        .family-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 20px;
+            justify-items: center;
+        }
+
+        .family-member {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            animation: bounceIn 1.5s ease-in-out;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .family-member:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .family-member img {
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .family-member p {
+            font-size: 14px;
+            color: #555;
+            margin: 0;
+            text-align: center;
+        }
+
+        /* Modal styling */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            padding: 20px;
+            overflow: auto;
+        }
+
+        .modal.hidden {
+            display: none;
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            padding: 15px;
+            position: relative;
+            max-height: 90%;
+            max-width: 90%;
+            overflow: hidden;
+            text-align: center;
+            animation: zoomIn 0.5s ease-in-out;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-content video {
+            max-width: 100%;
+            max-height: calc(100vh - 100px);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Close Button Styling */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ff4081;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 30;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+            animation: rotateIn 0.7s ease-in-out;
+        }
+
+        @keyframes rotateIn {
+            from { transform: rotate(-360deg); opacity: 0; }
+            to { transform: rotate(0); opacity: 1; }
+        }
+
+        .close-btn:hover {
+            background-color: #e60073;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <img src="bg.jpg" alt="Birthday Girl" class="birthday-girl-photo">
+        <h1>Happy Birthday, Saanvika!</h1>
+        <p>Click on a family member to see their special message!</p>
+    </div>
+    <div class="family-grid">
+        <div class="family-member" onclick="playVideo('./src/yogi_wishes.mp4')">
+            <img src="father.jpg" alt="Father">
+            <p>Father</p>
+        </div>
+        <div class="family-member" onclick="playVideo('./src/mother.mp4')">
+            <img src="mother...jpg" alt="Mother">
+            <p>Mother</p>
+        </div>
+        <div class="family-member" onclick="playVideo('yogi.mp4')">
+            <img src="yogi.jpg" alt="Mother">
+            <p>Yoganshika</p>
+        </div>
+        <div class="family-member" onclick="playVideo('grandfather..mp4')">
+            <img src="grandfather.jpg" alt="Grandfather">
+            <p>Grandfather</p>
+        </div>
+        <div class="family-member" onclick="playVideo('grandmother.mp4')">
+            <img src="grandmother.jpg" alt="Grandmother">
+            <p>Grandmother</p>
+        </div>
+        <div class="family-member" onclick="playVideo('nanni.mp4')">
+            <img src="atha-edit.jpg" alt="Grandmother">
+            <p>Grandmother</p>
+        </div>
+        <div class="family-member" onclick="playVideo('mamma.mp4')">
+            <img src="mama.jpg" alt="Grandmother">
+            <p>Mamma</p>
+        </div>
+        <div class="family-member" onclick="playVideo('Atha.mp4')">
+            <img src="atha.jpg" alt="Grandmother">
+            <p>Atha</p>
+        </div>
+        <div class="family-member" onclick="playVideo('bunny_babai.mp4')">
+            <img src="bunny_babai.jpg" alt="Grandmother">
+            <p>Bunny Babai</p>
+        </div>
+        <div class="family-member" onclick="playVideo('ramya_pinni.mp4')">
+            <img src="ramya_pinni.jpg" alt="Grandmother">
+            <p>Ramya Pinni</p>
+        </div>
+        <div class="family-member" onclick="playVideo('chintu_babai.mp4')">
+            <img src="chintubabai.jpg" alt="Grandmother">
+            <p>Chintu babai</p>
+        </div>
+        <div class="family-member" onclick="playVideo('kutti_pinni.mp4')">
+            <img src="kutti_akka.jpg" alt="Grandmother">
+            <p>Sridevi Pinni</p>
+        </div>
+        <div class="family-member" onclick="playVideo('babu anna .mp4')">
+            <img src="babuanna.jpg" alt="Grandmother">
+            <p>Narendra babai</p>
+        </div>
+        <div class="family-member" onclick="playVideo('Tejash.mp4')">
+            <img src="tejashanna.jpg" alt="Grandmother">
+            <p>Tejash babai</p>
+        </div>
+        <div class="family-member" onclick="playVideo('sai.mp4')">
+            <img src="sai.jpg" alt="Grandmother">
+            <p>Sai mamma</p>
+        </div>
+        <div class="family-member" onclick="playVideo('bharath.mp4')">
+            <img src="bharath.jpg" alt="Grandmother">
+            <p>Bharath mamma</p>
+        </div>
+        <div class="family-member" onclick="playVideo('devesh.mp4')">
+            <img src="devesh.jpg" alt="Grandmother">
+            <p>Devesh mamma</p>
+        </div>
+        <div class="family-member" onclick="playVideo('sneha_pinni.mp4')">
+            <img src="Sneha.jpg" alt="Grandmother">
+            <p>Sneha pinni </p>
+        </div>
+
+    </div>
+    <div id="video-modal" class="modal hidden">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">✖</button>
+            <video id="family-video" controls></video>
+        </div>
+    </div>
+</div>
+<script>
+    function playVideo(videoSrc) {
+        const videoModal = document.getElementById('video-modal');
+        const familyVideo = document.getElementById('family-video');
+
+        familyVideo.src = videoSrc;
+        videoModal.classList.remove('hidden');
+    }
+
+    function closeModal() {
+        const videoModal = document.getElementById('video-modal');
+        const familyVideo = document.getElementById('family-video');
+
+        familyVideo.pause();
+        familyVideo.src = ""; // Clears the video source
+        videoModal.classList.add('hidden');
+    }
+
+
+
+</script>
